@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(pnpm add:*)",
+      "WebFetch(domain:fumadocs.dev)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm run:*)",
+      "Bash(mv:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm postinstall:*)",
+      "Bash(ls:*)"
+    ],
+    "deny": []
+  }
+}

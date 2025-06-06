@@ -19,11 +19,20 @@ export const baseOptions: BaseLayoutProps = {
         >
           <circle cx={12} cy={12} r={12} fill="currentColor" />
         </svg>
-        My App
+        Tech Blog
       </>
     ),
   },
   links: [
+    {
+      text: 'Blog',
+      url: '/blog/list',
+      active: 'nested-url',
+    },
+    {
+      text: 'Tags',
+      url: '/blog/tags',
+    },
     {
       text: 'Documentation',
       url: '/docs',
