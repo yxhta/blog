@@ -9,7 +9,9 @@
       "Bash(mv:*)",
       "Bash(pnpm build:*)",
       "Bash(pnpm postinstall:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm tsc:*)"
     ],
     "deny": []
   }

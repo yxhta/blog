@@ -1,4 +1,4 @@
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared"
 
 /**
  * Shared layout configurations
@@ -8,35 +8,30 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
  * Docs Layout: app/docs/layout.tsx
  */
 export const baseOptions: BaseLayoutProps = {
-  nav: {
-    title: (
-      <>
-        <svg
-          width="24"
-          height="24"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-label="Logo"
-        >
-          <circle cx={12} cy={12} r={12} fill="currentColor" />
-        </svg>
-        Tech Blog
-      </>
-    ),
-  },
-  links: [
-    {
-      text: 'Blog',
-      url: '/blog/list',
-      active: 'nested-url',
-    },
-    {
-      text: 'Tags',
-      url: '/blog/tags',
-    },
-    {
-      text: 'Documentation',
-      url: '/docs',
-      active: 'nested-url',
-    },
-  ],
-};
+	nav: {
+		title: (
+			<>
+				<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" aria-label="Logo">
+					<circle cx={12} cy={12} r={12} fill="currentColor" />
+				</svg>
+				Tech Blog
+			</>
+		),
+	},
+	links: [
+		{
+			text: "Blog",
+			url: "/blog/list",
+			active: "nested-url",
+		},
+		{
+			text: "Tags",
+			url: "/blog/tags",
+		},
+		{
+			text: "Documentation",
+			url: "/docs",
+			active: "nested-url",
+		},
+	],
+}
