@@ -20,44 +20,92 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Architecture
 
-This is a Next.js 15 blog/documentation site using Fumadocs as the documentation framework.
+This is a Next.js 15 blog and documentation platform powered by Fumadocs, featuring both a technical blog and documentation system.
 
 ### Key Dependencies
 - **Next.js 15.3.1** - React framework with App Router
+- **React 19.1.0** - Latest stable React version
 - **Fumadocs** - Documentation framework (ui, core, mdx packages)
 - **Tailwind CSS v4** - Styling with PostCSS
 - **TypeScript** - Type safety
-- **Biome** - Fast linter and formatter for JavaScript/TypeScript
+- **Biome** - Fast linter and formatter
+- **Shiki** - Syntax highlighting with GitHub light/dark themes
+- **lucide-react** - Icon library
+- **Zod** - Schema validation for frontmatter
 
 ### Project Structure
 - **`/app`** - Next.js App Router pages and layouts
   - `(home)` - Home page group route
+  - `blog/` - Blog system routes
+    - `[[...slug]]` - Individual blog posts
+    - `list` - Blog listing page
+    - `authors/[author]` - Author profile pages
+    - `tags/[tag]` - Tag archive pages
   - `docs/[[...slug]]` - Dynamic documentation pages
   - `api/search` - Search API endpoint
+  - `rss.xml` - RSS feed generation
+  - `sitemap.ts` - Sitemap generation
+  - `robots.ts` - Robots.txt configuration
   - `layout.config.tsx` - Shared layout configuration
-- **`/content/docs`** - MDX documentation files
-- **`/lib/source.ts`** - Fumadocs source loader configuration
+- **`/content`** - Content storage
+  - `blog/` - Blog posts in MDX format
+  - `docs/` - Documentation in MDX format
+- **`/lib`** - Core utilities
+  - `source.ts` - Documentation source loader
+  - `blog-source.ts` - Blog source loader
+  - `authors.ts` - Author profiles and metadata
+- **`/components`** - Reusable components
+  - `social-share.tsx` - Social sharing (Twitter, LinkedIn, Web Share API)
 - **`/.source`** - Generated source files from fumadocs-mdx
 
 ### Content Management
-Content is managed through MDX files in `/content/docs`. The Fumadocs loader in `/lib/source.ts` processes these files and makes them available at `/docs/*` routes. The source configuration in `source.config.ts` defines schemas for frontmatter and metadata.
 
-### Routing
-- Home page at `/`
-- Documentation pages at `/docs/*`
-- Dynamic catch-all route handles nested documentation paths
+#### Blog System
+Blog posts in `/content/blog/` use MDX with the following frontmatter schema:
+- `title` (string, required)
+- `description` (string, required)
+- `author` (string, required) - Must match an author ID in `/lib/authors.ts`
+- `date` (string or Date, required)
+- `tags` (string array, optional)
+- `category` (string, optional)
+- `image` (string, optional) - Cover image URL
+- `excerpt` (string, optional)
 
-## Code Quality
+The blog includes automatic reading time calculation, author profiles with social links, and tag-based categorization.
+
+#### Documentation System
+Documentation files in `/content/docs/` use MDX with simpler frontmatter requirements. The Fumadocs loader processes these files and makes them available at `/docs/*` routes.
+
+### Routing Structure
+- `/` - Home page
+- `/blog/list` - Blog listing
+- `/blog/[slug]` - Individual blog posts
+- `/blog/authors/[author]` - Author archives
+- `/blog/tags` - All tags listing
+- `/blog/tags/[tag]` - Posts by tag
+- `/docs/*` - Documentation pages (nested structure supported)
+
+### SEO and Web Standards
+- **Sitemap Generation** - Automatic sitemap.xml for all pages
+- **RSS Feed** - Blog RSS feed at `/rss.xml`
+- **Robots.txt** - Crawler configuration
+- **Open Graph Meta Tags** - Social media preview optimization
+- **Structured Data** - Schema.org markup for blog posts
+
+### Environment Variables
+- `NEXT_PUBLIC_BASE_URL` - Required for absolute URLs in RSS feeds, sitemaps, and social sharing
+
+### Code Quality
 
 The project uses Biome for linting and formatting with the following configuration:
 
-### Biome Configuration (`biome.json`)
+#### Biome Configuration (`biome.json`)
 - **Formatting**: Tab indentation, 100-character line width, double quotes
 - **Linting**: Recommended rules with React/Next.js optimizations
 - **Import Sorting**: Automatic import organization
 - **Git Integration**: Uses `.gitignore` patterns automatically
 
-### Development Workflow
+#### Development Workflow
 1. Code changes are automatically formatted on save (if editor extension is installed)
 2. Run `pnpm lint` to check for issues
 3. Run `pnpm lint:fix` to auto-fix formatting and safe linting issues
