@@ -16,11 +16,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `pnpm format` - Format code with Biome
 - `pnpm tsc --noEmit` - Type check TypeScript without emitting files
 
-**Important:** Always run `pnpm lint` and `pnpm tsc --noEmit` before committing changes to ensure code quality.
+**Important:**
+- Always run `pnpm lint` and `pnpm tsc --noEmit` before committing changes to ensure code quality
+- At the end of each task, verify that `pnpm lint` runs without errors to maintain code cleanliness
+- No testing framework is currently configured in this project
 
 ## Architecture
 
-This is a Next.js 15 blog and documentation platform powered by Fumadocs, featuring both a technical blog and documentation system.
+This is a Next.js 15 blog and documentation platform powered by Fumadocs, featuring both a technical blog and documentation system. The application runs with React strict mode enabled for better development experience.
 
 ### Key Dependencies
 - **Next.js 15.3.1** - React framework with App Router
@@ -53,7 +56,6 @@ This is a Next.js 15 blog and documentation platform powered by Fumadocs, featur
 - **`/lib`** - Core utilities
   - `source.ts` - Documentation source loader
   - `blog-source.ts` - Blog source loader
-  - `authors.ts` - Author profiles and metadata
 - **`/components`** - Reusable components
   - `social-share.tsx` - Social sharing (Twitter, LinkedIn, Web Share API)
 - **`/.source`** - Generated source files from fumadocs-mdx
@@ -64,23 +66,25 @@ This is a Next.js 15 blog and documentation platform powered by Fumadocs, featur
 Blog posts in `/content/blog/` use MDX with the following frontmatter schema:
 - `title` (string, required)
 - `description` (string, required)
-- `author` (string, required) - Must match an author ID in `/lib/authors.ts`
 - `date` (string or Date, required)
 - `tags` (string array, optional)
 - `category` (string, optional)
 - `image` (string, optional) - Cover image URL
 - `excerpt` (string, optional)
 
-The blog includes automatic reading time calculation, author profiles with social links, and tag-based categorization.
+The blog includes automatic reading time calculation and tag-based categorization.
 
 #### Documentation System
 Documentation files in `/content/docs/` use MDX with simpler frontmatter requirements. The Fumadocs loader processes these files and makes them available at `/docs/*` routes.
+
+#### Syntax Highlighting
+The project uses Shiki with GitHub light/dark themes and supports syntax highlighting for the following languages:
+javascript, typescript, tsx, jsx, python, rust, go, bash, shell, sql, json, yaml, markdown, html, css, scss, java, c, cpp, php, ruby, kotlin, swift, dart, xml, dockerfile
 
 ### Routing Structure
 - `/` - Home page
 - `/blog/list` - Blog listing
 - `/blog/[slug]` - Individual blog posts
-- `/blog/authors/[author]` - Author archives
 - `/blog/tags` - All tags listing
 - `/blog/tags/[tag]` - Posts by tag
 - `/docs/*` - Documentation pages (nested structure supported)
@@ -95,12 +99,18 @@ Documentation files in `/content/docs/` use MDX with simpler frontmatter require
 ### Environment Variables
 - `NEXT_PUBLIC_BASE_URL` - Required for absolute URLs in RSS feeds, sitemaps, and social sharing
 
+### Build Configuration
+The project uses pnpm workspaces with specific build-only dependencies configured for:
+- `@tailwindcss/oxide`
+- `esbuild`
+- `sharp`
+
 ### Code Quality
 
 The project uses Biome for linting and formatting with the following configuration:
 
 #### Biome Configuration (`biome.json`)
-- **Formatting**: Tab indentation, 100-character line width, double quotes
+- **Formatting**: Space indentation, 100-character line width, double quotes
 - **Linting**: Recommended rules with React/Next.js optimizations
 - **Import Sorting**: Automatic import organization
 - **Git Integration**: Uses `.gitignore` patterns automatically
