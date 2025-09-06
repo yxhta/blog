@@ -41,6 +41,7 @@ next-env.d.ts
 
 # other
 .source
+.serena
 
 # claude
 .claude/commands
