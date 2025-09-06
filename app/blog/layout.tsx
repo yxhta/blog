@@ -1,7 +1,8 @@
-import { baseOptions } from "@/app/layout.config"
-import { blogSource } from "@/lib/blog-source"
-import { DocsLayout } from "fumadocs-ui/layouts/docs"
-import type { ReactNode } from "react"
+import { baseOptions } from "@/app/layout.config";
+import { Header } from "@/components/layout/home";
+import { blogSource } from "@/lib/blog-source";
+import { DocsLayout } from "fumadocs-ui/layouts/docs";
+import type { ReactNode } from "react";
 
 export default function BlogLayout({ children }: { children: ReactNode }) {
   return (
@@ -10,14 +11,16 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
       tree={blogSource.pageTree}
       nav={{
         ...baseOptions.nav,
-        title: "Blog",
+        component: <Header {...baseOptions} />,
       }}
       sidebar={{
-        defaultOpenLevel: 1,
-        collapsible: false,
+        enabled: false,
+      }}
+      containerProps={{
+        className: "pt-4 max-w-6xl mx-auto",
       }}
     >
       {children}
     </DocsLayout>
-  )
+  );
 }
