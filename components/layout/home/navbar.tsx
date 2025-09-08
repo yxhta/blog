@@ -3,10 +3,10 @@ import type {
   NavigationMenuContentProps,
   NavigationMenuTriggerProps,
 } from "@radix-ui/react-navigation-menu"
-import { type VariantProps, cva } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority"
 import Link, { type LinkProps } from "fumadocs-core/link"
 import { useNav } from "fumadocs-ui/contexts/layout"
-import { type ComponentProps, useState } from "react"
+import { type ComponentProps, useId, useState } from "react"
 import { cn } from "../../../lib/cn"
 import {
   NavigationMenu,
@@ -27,11 +27,12 @@ const navItemVariants = cva(
 export function Navbar(props: ComponentProps<"div">) {
   const [value, setValue] = useState("")
   const { isTransparent } = useNav()
+  const navId = useId()
 
   return (
     <NavigationMenu value={value} onValueChange={setValue} asChild>
       <header
-        id="nd-nav"
+        id={navId}
         {...props}
         className={cn(
           "fixed top-(--fd-banner-height) z-40 left-0 right-(--removed-body-scroll-bar-size,0) backdrop-blur-lg border-b transition-colors *:mx-auto *:max-w-fd-container",

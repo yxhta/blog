@@ -13,11 +13,12 @@ import { useTreeContext, useTreePath } from "fumadocs-ui/contexts/tree"
 import { ChevronDown, ExternalLink } from "lucide-react"
 import {
   type ComponentProps,
+  createContext,
   type FC,
   Fragment,
   type ReactNode,
-  createContext,
   useContext,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -101,6 +102,7 @@ export function SidebarContent(props: ComponentProps<"aside">) {
   const [hover, setHover] = useState(false)
   const timerRef = useRef(0)
   const closeTimeRef = useRef(0)
+  const sidebarId = useId()
 
   useOnChange(collapsed, () => {
     setHover(false)
@@ -109,7 +111,7 @@ export function SidebarContent(props: ComponentProps<"aside">) {
 
   return (
     <aside
-      id="nd-sidebar"
+      id={sidebarId}
       {...props}
       data-collapsed={collapsed}
       className={cn(
@@ -158,26 +160,23 @@ export function SidebarContent(props: ComponentProps<"aside">) {
 export function SidebarContentMobile({ className, children, ...props }: ComponentProps<"aside">) {
   const { open, setOpen } = useSidebar()
   const state = open ? "open" : "closed"
+  const mobileId = useId()
 
   return (
     <>
       <Presence present={open}>
-        <div
+        <button
+          type="button"
           data-state={state}
           className="fixed z-40 inset-0 backdrop-blur-xs data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out"
           onClick={() => setOpen(false)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") setOpen(false)
-          }}
-          role="button"
-          tabIndex={0}
           aria-label="Close sidebar overlay"
         />
       </Presence>
       <Presence present={open}>
         {({ present }) => (
           <aside
-            id="nd-sidebar-mobile"
+            id={mobileId}
             {...props}
             data-state={state}
             className={cn(
@@ -423,9 +422,7 @@ export interface SidebarComponents {
 /**
  * Render sidebar items from page tree
  */
-export function SidebarPageTree(props: {
-  components?: Partial<SidebarComponents>
-}) {
+export function SidebarPageTree(props: { components?: Partial<SidebarComponents> }) {
   const { root } = useTreeContext()
 
   return useMemo(() => {
@@ -472,13 +469,7 @@ export function SidebarPageTree(props: {
   }, [props.components, root])
 }
 
-function PageTreeFolder({
-  item,
-  ...props
-}: {
-  item: PageTree.Folder
-  children: ReactNode
-}) {
+function PageTreeFolder({ item, ...props }: { item: PageTree.Folder; children: ReactNode }) {
   const { defaultOpenLevel, level } = useInternalContext()
   const path = useTreePath()
 

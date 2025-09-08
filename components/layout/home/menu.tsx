@@ -31,13 +31,7 @@ const menuItemVariants = cva("", {
   },
 })
 
-export function MenuLinkItem({
-  item,
-  ...props
-}: {
-  item: LinkItemType
-  className?: string
-}) {
+export function MenuLinkItem({ item, ...props }: { item: LinkItemType; className?: string }) {
   if (item.type === "custom")
     return <div className={cn("grid", props.className)}>{item.children}</div>
 

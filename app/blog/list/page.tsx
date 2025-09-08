@@ -1,6 +1,6 @@
-import { blogSource } from "@/lib/blog-source"
 import { ArrowRight, Calendar, Clock } from "lucide-react"
 import Link from "next/link"
+import { blogSource } from "@/lib/blog-source"
 
 export const metadata = {
   title: "Blog - Software Engineering Insights",

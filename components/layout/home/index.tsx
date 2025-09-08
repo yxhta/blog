@@ -1,13 +1,13 @@
 import Link from "fumadocs-core/link"
 import { NavProvider } from "fumadocs-ui/contexts/layout"
 import { ChevronDown, Languages } from "lucide-react"
-import { Fragment, type HTMLAttributes, useMemo } from "react"
+import { Fragment, type HTMLAttributes, useId, useMemo } from "react"
 import { cn } from "../../../lib/cn"
 import { LanguageToggle, LanguageToggleText } from "../../language-toggle"
 import { LargeSearchToggle, SearchToggle } from "../../search-toggle"
 import { ThemeToggle } from "../../theme-toggle"
 import { buttonVariants } from "../../ui/button"
-import { type BaseLayoutProps, type LinkItemType, type NavOptions, getLinks } from "../shared/index"
+import { type BaseLayoutProps, getLinks, type LinkItemType, type NavOptions } from "../shared/index"
 import { Menu, MenuContent, MenuLinkItem, MenuTrigger } from "./menu"
 import {
   Navbar,
@@ -41,13 +41,11 @@ export function HomeLayout(props: HomeLayoutProps & HTMLAttributes<HTMLElement>)
     ...rest
   } = props
 
+  const id = useId()
+
   return (
     <NavProvider transparentMode={nav?.transparentMode}>
-      <main
-        id="nd-home-layout"
-        {...rest}
-        className={cn("flex flex-1 flex-col pt-14", rest.className)}
-      >
+      <main id={id} {...rest} className={cn("flex flex-1 flex-col pt-14", rest.className)}>
         {nav.enabled !== false &&
           (nav.component ?? (
             <Header
@@ -166,7 +164,7 @@ export function Header({
                   className="-me-1.5"
                 />
               ))}
-              <div role="separator" tabIndex={0} className="flex-1" />
+              <hr className="flex-1" />
               {i18n ? (
                 <LanguageToggle>
                   <Languages className="size-5" />
@@ -184,13 +182,7 @@ export function Header({
   )
 }
 
-function NavbarLinkItem({
-  item,
-  ...props
-}: {
-  item: LinkItemType
-  className?: string
-}) {
+function NavbarLinkItem({ item, ...props }: { item: LinkItemType; className?: string }) {
   if (item.type === "custom") return <div {...props}>{item.children}</div>
 
   if (item.type === "menu") {

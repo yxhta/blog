@@ -1,6 +1,6 @@
-import { blogSource } from "@/lib/blog-source"
 import { ArrowRight, Calendar } from "lucide-react"
 import Link from "next/link"
+import { blogSource } from "@/lib/blog-source"
 
 export default async function HomePage() {
   const recentPosts = (await blogSource.getPages())

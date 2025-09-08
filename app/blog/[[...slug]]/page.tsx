@@ -1,10 +1,10 @@
-import { SocialShare } from "@/components/social-share"
-import { blogSource } from "@/lib/blog-source"
 import { DocsBody, DocsPage } from "fumadocs-ui/page"
-import { ArrowRight, Calendar, Clock, Tag } from "lucide-react"
+import { Calendar, Clock, Tag } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
+import { SocialShare } from "@/components/social-share"
+import { blogSource } from "@/lib/blog-source"
 
 interface BlogPageProps {
   params: Promise<{ slug?: string[] }>

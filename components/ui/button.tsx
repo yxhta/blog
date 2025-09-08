@@ -1,4 +1,4 @@
-import { type VariantProps, cva } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority"
 
 const variants = {
   primary: "bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/80",
