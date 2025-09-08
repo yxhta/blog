@@ -125,7 +125,8 @@ export function SidebarContent(props: ComponentProps<"aside">) {
           ...props.style,
           "--fd-sidebar-offset": hover ? "calc(var(--spacing) * 2)" : "calc(16px - 100%)",
           "--fd-sidebar-margin": collapsed ? "0.5rem" : "0px",
-          "--fd-sidebar-top": `calc(var(--fd-banner-height) + var(--fd-nav-height) + var(--fd-sidebar-margin))`,
+          "--fd-sidebar-top":
+            "calc(var(--fd-banner-height) + var(--fd-nav-height) + var(--fd-sidebar-margin))",
           width: collapsed
             ? "var(--fd-sidebar-width)"
             : "calc(var(--spacing) + var(--fd-sidebar-width) + var(--fd-layout-offset))",
@@ -165,6 +166,12 @@ export function SidebarContentMobile({ className, children, ...props }: Componen
           data-state={state}
           className="fixed z-40 inset-0 backdrop-blur-xs data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out"
           onClick={() => setOpen(false)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") setOpen(false)
+          }}
+          role="button"
+          tabIndex={0}
+          aria-label="Close sidebar overlay"
         />
       </Presence>
       <Presence present={open}>
@@ -329,7 +336,7 @@ export function SidebarFolderLink(props: LinkProps) {
 }
 
 export function SidebarFolderContent(props: CollapsibleContentProps) {
-  const { level, ...ctx } = useInternalContext()
+  const { level, defaultOpenLevel, prefetch } = useInternalContext()
 
   return (
     <CollapsibleContent
@@ -352,10 +359,11 @@ export function SidebarFolderContent(props: CollapsibleContentProps) {
       <Context.Provider
         value={useMemo(
           () => ({
-            ...ctx,
+            defaultOpenLevel,
+            prefetch,
             level: level + 1,
           }),
-          [ctx, level]
+          [defaultOpenLevel, prefetch, level]
         )}
       >
         {props.children}
@@ -426,9 +434,9 @@ export function SidebarPageTree(props: {
     function renderSidebarList(items: PageTree.Node[], level: number): ReactNode[] {
       return items.map((item, i) => {
         if (item.type === "separator") {
-          if (Separator) return <Separator key={i} item={item} />
+          if (Separator) return <Separator key={`${item.type}:${item.name}`} item={item} />
           return (
-            <SidebarSeparator key={i} className={cn(i !== 0 && "mt-6")}>
+            <SidebarSeparator key={`${item.type}:${item.name}`} className={cn(i !== 0 && "mt-6")}>
               {item.icon}
               {item.name}
             </SidebarSeparator>
@@ -440,12 +448,12 @@ export function SidebarPageTree(props: {
 
           if (Folder)
             return (
-              <Folder key={i} item={item} level={level}>
+              <Folder key={`${item.type}:${item.name}`} item={item} level={level}>
                 {children}
               </Folder>
             )
           return (
-            <PageTreeFolder key={i} item={item}>
+            <PageTreeFolder key={`${item.type}:${item.name}`} item={item}>
               {children}
             </PageTreeFolder>
           )

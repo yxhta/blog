@@ -25,8 +25,8 @@ export default function ClerkTOCItems({ ref, className, ...props }: ComponentPro
 
     function onResize(): void {
       if (container.clientHeight === 0) return
-      let w = 0,
-        h = 0
+      let w = 0
+      let h = 0
       const d: string[] = []
       for (let i = 0; i < items.length; i++) {
         const element: HTMLElement | null = container.querySelector(
@@ -35,10 +35,10 @@ export default function ClerkTOCItems({ ref, className, ...props }: ComponentPro
         if (!element) continue
 
         const styles = getComputedStyle(element)
-        const offset = getLineOffset(items[i].depth) + 1,
-          top = element.offsetTop + Number.parseFloat(styles.paddingTop),
-          bottom =
-            element.offsetTop + element.clientHeight - Number.parseFloat(styles.paddingBottom)
+        const offset = getLineOffset(items[i].depth) + 1
+        const top = element.offsetTop + Number.parseFloat(styles.paddingTop)
+        const bottom =
+          element.offsetTop + element.clientHeight - Number.parseFloat(styles.paddingBottom)
 
         w = Math.max(offset, w)
         h = Math.max(h, bottom)
@@ -125,9 +125,9 @@ function TOCItem({
   upper?: number
   lower?: number
 }) {
-  const offset = getLineOffset(item.depth),
-    upperOffset = getLineOffset(upper),
-    lowerOffset = getLineOffset(lower)
+  const offset = getLineOffset(item.depth)
+  const upperOffset = getLineOffset(upper)
+  const lowerOffset = getLineOffset(lower)
 
   return (
     <Primitive.TOCItem
@@ -142,6 +142,7 @@ function TOCItem({
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
           className="absolute -top-1.5 start-0 size-4 rtl:-scale-x-100"
+          aria-hidden="true"
         >
           <line
             x1={upperOffset}

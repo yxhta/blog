@@ -1,28 +1,28 @@
-import { SocialShare } from "@/components/social-share";
-import { blogSource } from "@/lib/blog-source";
-import { DocsBody, DocsPage } from "fumadocs-ui/page";
-import { ArrowRight, Calendar, Clock, Tag } from "lucide-react";
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { SocialShare } from "@/components/social-share"
+import { blogSource } from "@/lib/blog-source"
+import { DocsBody, DocsPage } from "fumadocs-ui/page"
+import { ArrowRight, Calendar, Clock, Tag } from "lucide-react"
+import type { Metadata } from "next"
+import Link from "next/link"
+import { notFound, redirect } from "next/navigation"
 
 interface BlogPageProps {
-  params: Promise<{ slug?: string[] }>;
+  params: Promise<{ slug?: string[] }>
 }
 
 export default async function BlogPostPage(props: BlogPageProps) {
-  const params = await props.params;
+  const params = await props.params
 
   // If no slug provided, redirect to blog list
   if (!params.slug || params.slug.length === 0) {
-    redirect("/blog/list");
+    redirect("/blog/list")
   }
 
-  const page = blogSource.getPage(params.slug);
-  if (!page) notFound();
+  const page = blogSource.getPage(params.slug)
+  if (!page) notFound()
 
-  const MDX = page.data.body;
-  const readingTime = Math.ceil(page.data.content.split(/\s+/).length / 200);
+  const MDX = page.data.body
+  const readingTime = Math.ceil(page.data.content.split(/\s+/).length / 200)
 
   return (
     <DocsPage lastUpdate={page.data.lastModified}>
@@ -76,31 +76,29 @@ export default async function BlogPostPage(props: BlogPageProps) {
         </article>
       </DocsBody>
     </DocsPage>
-  );
+  )
 }
 
 export async function generateStaticParams() {
-  const posts = await blogSource.getPages();
+  const posts = await blogSource.getPages()
   return posts.map((post) => ({
     slug: post.url.split("/").filter(Boolean).slice(1), // Remove 'blog' from path
-  }));
+  }))
 }
 
-export async function generateMetadata(
-  props: BlogPageProps,
-): Promise<Metadata> {
-  const params = await props.params;
+export async function generateMetadata(props: BlogPageProps): Promise<Metadata> {
+  const params = await props.params
 
   if (!params.slug || params.slug.length === 0) {
     return {
       title: "blog.yxhta.com",
       description: "",
-    };
+    }
   }
 
-  const page = blogSource.getPage(params.slug);
+  const page = blogSource.getPage(params.slug)
 
-  if (!page) notFound();
+  if (!page) notFound()
 
   return {
     title: page.data.title,
@@ -112,5 +110,5 @@ export async function generateMetadata(
       publishedTime: page.data.date.toISOString(),
       tags: page.data.tags,
     },
-  };
+  }
 }

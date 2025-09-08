@@ -62,8 +62,14 @@ export function MenuLinkItem({
             header
           )}
         </p>
-        {item.items.map((child, i) => (
-          <MenuLinkItem key={i} item={child} />
+        {item.items.map((child) => (
+          <MenuLinkItem
+            key={
+              ("url" in child && child.url) ||
+              `${child.type}:${"text" in child ? String(child.text) : "custom"}`
+            }
+            item={child}
+          />
         ))}
       </div>
     )

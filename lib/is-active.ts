@@ -6,10 +6,12 @@ function normalize(url: string) {
 }
 
 export function isActive(url: string, pathname: string, nested = true): boolean {
-  url = normalize(url)
-  pathname = normalize(pathname)
+  const normalizedUrl = normalize(url)
+  const normalizedPath = normalize(pathname)
 
-  return url === pathname || (nested && pathname.startsWith(`${url}/`))
+  return (
+    normalizedUrl === normalizedPath || (nested && normalizedPath.startsWith(`${normalizedUrl}/`))
+  )
 }
 
 export function isTabActive(tab: SidebarTab, pathname: string) {
