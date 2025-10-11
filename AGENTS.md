@@ -1,46 +1,22 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `app/`: Next.js App Router pages, layouts, and route handlers.
-- `components/`: Reusable UI components.
-- `content/`: MDX content for posts and docs.
-- `lib/`: Shared utilities and config helpers.
-- `mdx-components.tsx`: Custom MDX component mappings.
-- `source.config.ts`: Fumadocs/content configuration.
-- `.source/`: Generated source artifacts; avoid manual edits.
+The app follows Next.js App Router conventions. UI routes, layouts, and handlers live in `app/`, while reusable components sit in `components/`. Content authors should place MDX entries in `content/`; any generated artifacts appear under `.source/` and should never be edited manually. Shared configuration and helpers belong in `lib/`, with MDX overrides declared in `mdx-components.tsx` and global content settings in `source.config.ts`. Keep assets close to their consuming modules to limit cross-folder churn.
 
 ## Build, Test, and Development Commands
-- `pnpm dev`: Run the Next.js dev server with Turbo.
-- `pnpm build`: Production build (`next build`).
-- `pnpm start`: Start the production server.
-- `pnpm lint`: Run Biome checks (lint + type-aware rules).
-- `pnpm lint:fix`: Auto-fix Biome issues where possible.
-- `pnpm format`: Format code with Biome.
-
-Use `pnpm` (workspace-aware). Avoid `npm`/`yarn` to prevent lockfile churn.
+Use `pnpm dev` for an iterative dev server and `pnpm build` followed by `pnpm start` to mimic production. `pnpm lint` runs Biome’s lint plus type-aware rules; add `:fix` when safe automation helps. `pnpm format` enforces formatting only. Stick with `pnpm` to respect the workspace lockfile and avoid dependency drift.
 
 ## Coding Style & Naming Conventions
-- Language: TypeScript, React 19, Next.js App Router.
-- Formatting/Linting: Biome (see `biome.json`). Run before pushing.
-- Indentation: 2 spaces; prefer named exports; avoid default unless conventional.
-- Filenames: kebab-case for files/dirs (`blog-card.tsx`), PascalCase for components, camelCase for variables/functions.
-- Tailwind v4 via PostCSS; keep class lists readable and co-locate minimal styles.
+TypeScript, React 19, and the App Router power the stack. Indent with two spaces and prefer named exports. Filenames and directories use kebab-case (`blog-card.tsx`), React components stay PascalCase, and variables default to camelCase. Tailwind v4 is configured through PostCSS; keep class lists readable and colocate tiny style tweaks with their components. Always resolve lint feedback before submitting work.
 
 ## Testing Guidelines
-- No test framework is configured yet. Prefer Vitest for unit tests and Playwright for E2E if added.
-- Naming: `*.test.ts` / `*.test.tsx` adjacent to source.
-- Aim for critical-path coverage (parsers, content transforms, and UI rendering states).
+No harness ships today, but prefer Vitest for units and Playwright for E2E when coverage is required. Co-locate tests beside source using the `*.test.ts[x]` pattern and focus on critical paths such as MDX parsing and layout rendering. Add scripts or documentation updates when you introduce a new testing tool so others can reproduce results.
 
 ## Commit & Pull Request Guidelines
-- Commits: Conventional Commits (`feat:`, `fix:`, `docs:`, `chore(deps):`), present tense, concise scope.
-- PRs: Provide a summary, motivation, screenshots for UI, and link issues. Ensure `pnpm lint` and `pnpm build` pass.
-- Keep changes scoped; avoid drive-by refactors.
+Commits follow Conventional Commits (`feat:`, `fix:`, `docs:`, `chore(deps):`) in present tense with concise scope. Pull requests should explain motivation, outline key changes, include UI screenshots when altering visuals, and link issues when relevant. Always run `pnpm lint` and, for significant changes, `pnpm build` before requesting review.
 
 ## Security & Configuration Tips
-- Use `.env.local` for secrets; client-exposed vars must start with `NEXT_PUBLIC_`.
-- Do not commit generated files in `.next/` or credentials.
+Secrets belong in `.env.local`; expose values to the client only with the `NEXT_PUBLIC_` prefix. Never commit `.next/`, credentials, or other generated artifacts. When touching configuration, document required environment variables and keep defaults safe for local development.
 
 ## Agent-Specific Instructions
-- Scope: These rules apply repo-wide. Prefer minimal, surgical patches.
-- Follow Biome output; do not add new dependencies without justification.
-- Use `content/` for posts; avoid editing `.source/` outputs directly.
+Favor minimal, surgical patches that respect existing work. Avoid adding dependencies without justification, and prefer editing MDX through `content/` rather than manipulating `.source/`. Consult `biome.jsonc` for lint rules before deviating from the established style.
