@@ -1,10 +1,10 @@
-import type { MetadataRoute } from "next"
-import { blogSource } from "@/lib/blog-source"
+import type { MetadataRoute } from "next";
+import { blogSource } from "@/lib/blog-source";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-  const blogPosts = await blogSource.getPages()
+  const blogPosts = await blogSource.getPages();
 
   const routes = [
     {
@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly" as const,
       priority: 0.7,
     },
-  ]
+  ];
 
   // Add blog posts
   const blogSitemapEntries = blogPosts.map((post) => ({
@@ -33,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(post.data.date),
     changeFrequency: "monthly" as const,
     priority: 0.6,
-  }))
+  }));
 
-  return [...routes, ...blogSitemapEntries]
+  return [...routes, ...blogSitemapEntries];
 }

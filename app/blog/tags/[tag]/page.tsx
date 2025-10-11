@@ -15,9 +15,7 @@ export default async function TagPage(props: TagPageProps) {
   const decodedTag = decodeURIComponent(tag);
 
   const allPosts = await blogSource.getPages();
-  const postsWithTag = allPosts.filter((post) =>
-    post.data.tags?.includes(decodedTag),
-  );
+  const postsWithTag = allPosts.filter((post) => post.data.tags?.includes(decodedTag));
 
   if (postsWithTag.length === 0) {
     notFound();
@@ -36,16 +34,14 @@ export default async function TagPage(props: TagPageProps) {
             <h1 className="text-4xl font-bold">#{decodedTag}</h1>
           </div>
           <p className="text-muted-foreground text-lg">
-            {postsWithTag.length} {postsWithTag.length === 1 ? "post" : "posts"}{" "}
-            tagged with "{decodedTag}"
+            {postsWithTag.length} {postsWithTag.length === 1 ? "post" : "posts"} tagged with "
+            {decodedTag}"
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sortedPosts.map((post) => {
-            const readingTime = Math.ceil(
-              post.data.content.split(/\s+/).length / 200,
-            );
+            const readingTime = Math.ceil(post.data.content.split(/\s+/).length / 200);
 
             return (
               <article key={post.url} className="group">
@@ -64,9 +60,7 @@ export default async function TagPage(props: TagPageProps) {
                       <div className="space-y-2 text-sm text-muted-foreground">
                         <div className="flex items-center gap-2">
                           <Calendar className="h-3.5 w-3.5" />
-                          <time
-                            dateTime={new Date(post.data.date).toISOString()}
-                          >
+                          <time dateTime={new Date(post.data.date).toISOString()}>
                             {new Intl.DateTimeFormat("en-US", {
                               year: "numeric",
                               month: "short",

@@ -1,12 +1,12 @@
 import { DocsBody, DocsPage } from "fumadocs-ui/page";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { blogSource } from "@/lib/blog-source";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Blog - Software Engineering Insights",
-  description:
-    "Technical articles, tutorials, and insights on software engineering",
+  description: "Technical articles, tutorials, and insights on software engineering",
 };
 
 export default async function BlogPage() {
@@ -31,9 +31,7 @@ export default async function BlogPage() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sortedPosts.map((post) => {
-            const readingTime = Math.ceil(
-              post.data.content.split(/\s+/).length / 200,
-            );
+            const readingTime = Math.ceil(post.data.content.split(/\s+/).length / 200);
 
             return (
               <article key={post.url} className="group">
@@ -52,9 +50,7 @@ export default async function BlogPage() {
                       <div className="space-y-2 text-sm text-muted-foreground">
                         <div className="flex items-center gap-2">
                           <Calendar className="h-3.5 w-3.5" />
-                          <time
-                            dateTime={new Date(post.data.date).toISOString()}
-                          >
+                          <time dateTime={new Date(post.data.date).toISOString()}>
                             {new Intl.DateTimeFormat("en-US", {
                               year: "numeric",
                               month: "short",
@@ -71,10 +67,7 @@ export default async function BlogPage() {
                       {post.data.tags && post.data.tags.length > 0 && (
                         <div className="mt-4 flex flex-wrap gap-1">
                           {post.data.tags.slice(0, 3).map((tag: string) => (
-                            <span
-                              key={tag}
-                              className="px-2 py-0.5 bg-secondary text-xs rounded-md"
-                            >
+                            <span key={tag} className="px-2 py-0.5 bg-secondary text-xs rounded-md">
                               {tag}
                             </span>
                           ))}
@@ -94,9 +87,7 @@ export default async function BlogPage() {
 
         {sortedPosts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">
-              No blog posts yet. Check back soon!
-            </p>
+            <p className="text-muted-foreground">No blog posts yet. Check back soon!</p>
           </div>
         )}
       </DocsBody>

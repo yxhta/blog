@@ -1,9 +1,9 @@
-import { blogSource } from "@/lib/blog-source"
+import { blogSource } from "@/lib/blog-source";
 
 export async function GET() {
-  const posts = await blogSource.getPages()
+  const posts = await blogSource.getPages();
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -25,16 +25,16 @@ export async function GET() {
       <guid>${baseUrl}${post.url}</guid>
       <pubDate>${new Date(post.data.date).toUTCString()}</pubDate>
       ${post.data.category ? `<category>${post.data.category}</category>` : ""}
-    </item>`
+    </item>`,
       )
       .join("")}
   </channel>
-</rss>`
+</rss>`;
 
   return new Response(rssXml, {
     headers: {
       "Content-Type": "application/xml",
       "Cache-Control": "s-maxage=3600, stale-while-revalidate",
     },
-  })
+  });
 }

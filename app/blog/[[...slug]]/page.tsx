@@ -1,9 +1,4 @@
-import {
-  DocsBody,
-  DocsDescription,
-  DocsPage,
-  DocsTitle,
-} from "fumadocs-ui/page";
+import { DocsBody, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import { Calendar, Clock, Tag } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -32,48 +27,10 @@ export default async function BlogPostPage(props: BlogPageProps) {
   return (
     <DocsPage lastUpdate={page.data.lastModified}>
       <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>
-        <>
-          <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              <time dateTime={page.data.date.toISOString()}>
-                {new Intl.DateTimeFormat("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                }).format(new Date(page.data.date))}
-              </time>
-            </div>
-            <div className="flex items-center gap-1">
-              <Clock className="h-4 w-4" />
-              <span>{readingTime} min read</span>
-            </div>
-          </div>
-
-          {page.data.tags && page.data.tags.length > 0 && (
-            <div className="flex items-center gap-2">
-              <Tag className="h-4 w-4 text-muted-foreground" />
-              <div className="flex gap-2">
-                {page.data.tags.map((tag: string) => (
-                  <Link
-                    key={tag}
-                    href={`/blog/tags/${encodeURIComponent(tag)}`}
-                    className="px-2 py-1 bg-secondary text-xs rounded-md hover:bg-primary hover:text-primary-foreground transition-colors"
-                  >
-                    {tag}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-        </>
-      </DocsDescription>
       <DocsBody>
         {/*<article className="prose prose-neutral dark:prose-invert max-w-none">*/}
         {/*<h1 className="text-4xl font-bold mb-4">{page.data.title}</h1>*/}
 
-        {/*
         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-8">
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
@@ -107,16 +64,11 @@ export default async function BlogPostPage(props: BlogPageProps) {
             </div>
           </div>
         )}
-        */}
 
         <MDX />
 
         <div className="mt-12 pt-8 border-t border-border">
-          <SocialShare
-            url={page.url}
-            title={page.data.title}
-            description={page.data.description}
-          />
+          <SocialShare url={page.url} title={page.data.title} description={page.data.description} />
         </div>
         {/*</article>*/}
       </DocsBody>
@@ -131,9 +83,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata(
-  props: BlogPageProps,
-): Promise<Metadata> {
+export async function generateMetadata(props: BlogPageProps): Promise<Metadata> {
   const params = await props.params;
 
   if (!params.slug || params.slug.length === 0) {

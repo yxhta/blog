@@ -15,19 +15,11 @@ export const metadata: Metadata = {
   },
   description:
     "A technical blog focused on software engineering, programming tutorials, and best practices.",
-  keywords: [
-    "software engineering",
-    "programming",
-    "web development",
-    "tutorials",
-    "tech blog",
-  ],
+  keywords: ["software engineering", "programming", "web development", "tutorials", "tech blog"],
   authors: [{ name: "yxhta" }],
   creator: "yxhta",
   publisher: "yxhta",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-  ),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
   alternates: {
     canonical: "/",
     types: {

@@ -1,5 +1,5 @@
-import { defineConfig, defineDocs, frontmatterSchema, metaSchema } from "fumadocs-mdx/config"
-import { z } from "zod"
+import { defineConfig, defineDocs, frontmatterSchema, metaSchema } from "fumadocs-mdx/config";
+import { z } from "zod";
 
 const blogFrontmatterSchema = frontmatterSchema.extend({
   date: z
@@ -10,7 +10,7 @@ const blogFrontmatterSchema = frontmatterSchema.extend({
   category: z.string().optional(),
   image: z.string().optional(),
   excerpt: z.string().optional(),
-})
+});
 
 export const blog = defineDocs({
   dir: "content/blog",
@@ -20,7 +20,7 @@ export const blog = defineDocs({
   meta: {
     schema: metaSchema,
   },
-})
+});
 
 export default defineConfig({
   mdxOptions: {
@@ -74,4 +74,4 @@ export default defineConfig({
     //   },
     // },
   },
-})
+});

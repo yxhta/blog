@@ -1,11 +1,11 @@
-"use client"
-import * as Primitive from "@radix-ui/react-navigation-menu"
-import * as React from "react"
-import { cn } from "../lib/cn"
+"use client";
+import * as Primitive from "@radix-ui/react-navigation-menu";
+import * as React from "react";
+import { cn } from "../lib/cn";
 
-const NavigationMenu = Primitive.Root
+const NavigationMenu = Primitive.Root;
 
-const NavigationMenuList = Primitive.List
+const NavigationMenuList = Primitive.List;
 
 const NavigationMenuItem = React.forwardRef<
   React.ComponentRef<typeof Primitive.NavigationMenuItem>,
@@ -14,9 +14,9 @@ const NavigationMenuItem = React.forwardRef<
   <Primitive.NavigationMenuItem ref={ref} className={cn("list-none", className)} {...props}>
     {children}
   </Primitive.NavigationMenuItem>
-))
+));
 
-NavigationMenuItem.displayName = Primitive.NavigationMenuItem.displayName
+NavigationMenuItem.displayName = Primitive.NavigationMenuItem.displayName;
 
 const NavigationMenuTrigger = React.forwardRef<
   React.ComponentRef<typeof Primitive.Trigger>,
@@ -29,8 +29,8 @@ const NavigationMenuTrigger = React.forwardRef<
   >
     {children}
   </Primitive.Trigger>
-))
-NavigationMenuTrigger.displayName = Primitive.Trigger.displayName
+));
+NavigationMenuTrigger.displayName = Primitive.Trigger.displayName;
 
 const NavigationMenuContent = React.forwardRef<
   React.ComponentRef<typeof Primitive.Content>,
@@ -40,14 +40,14 @@ const NavigationMenuContent = React.forwardRef<
     ref={ref}
     className={cn(
       "absolute inset-x-0 top-0 overflow-auto fd-scroll-container max-h-[80svh] data-[motion=from-end]:animate-fd-enterFromRight data-[motion=from-start]:animate-fd-enterFromLeft data-[motion=to-end]:animate-fd-exitToRight data-[motion=to-start]:animate-fd-exitToLeft",
-      className
+      className,
     )}
     {...props}
   />
-))
-NavigationMenuContent.displayName = Primitive.Content.displayName
+));
+NavigationMenuContent.displayName = Primitive.Content.displayName;
 
-const NavigationMenuLink = Primitive.Link
+const NavigationMenuLink = Primitive.Link;
 
 const NavigationMenuViewport = React.forwardRef<
   React.ComponentRef<typeof Primitive.Viewport>,
@@ -58,12 +58,12 @@ const NavigationMenuViewport = React.forwardRef<
       {...props}
       className={cn(
         "relative h-(--radix-navigation-menu-viewport-height) w-full origin-[top_center] overflow-hidden transition-[width,height] duration-300 data-[state=closed]:animate-fd-nav-menu-out data-[state=open]:animate-fd-nav-menu-in",
-        className
+        className,
       )}
     />
   </div>
-))
-NavigationMenuViewport.displayName = Primitive.Viewport.displayName
+));
+NavigationMenuViewport.displayName = Primitive.Viewport.displayName;
 
 export {
   NavigationMenu,
@@ -73,4 +73,4 @@ export {
   NavigationMenuTrigger,
   NavigationMenuLink,
   NavigationMenuViewport,
-}
+};

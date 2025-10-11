@@ -1,14 +1,19 @@
-import Link from "fumadocs-core/link"
-import { NavProvider } from "fumadocs-ui/contexts/layout"
-import { ChevronDown, Languages } from "lucide-react"
-import { Fragment, type HTMLAttributes, useId, useMemo } from "react"
-import { cn } from "../../../lib/cn"
-import { LanguageToggle, LanguageToggleText } from "../../language-toggle"
-import { LargeSearchToggle, SearchToggle } from "../../search-toggle"
-import { ThemeToggle } from "../../theme-toggle"
-import { buttonVariants } from "../../ui/button"
-import { type BaseLayoutProps, getLinks, type LinkItemType, type NavOptions } from "../shared/index"
-import { Menu, MenuContent, MenuLinkItem, MenuTrigger } from "./menu"
+import Link from "fumadocs-core/link";
+import { NavProvider } from "fumadocs-ui/contexts/layout";
+import { ChevronDown, Languages } from "lucide-react";
+import { Fragment, type HTMLAttributes, useId, useMemo } from "react";
+import { cn } from "../../../lib/cn";
+import { LanguageToggle, LanguageToggleText } from "../../language-toggle";
+import { LargeSearchToggle, SearchToggle } from "../../search-toggle";
+import { ThemeToggle } from "../../theme-toggle";
+import { buttonVariants } from "../../ui/button";
+import {
+  type BaseLayoutProps,
+  getLinks,
+  type LinkItemType,
+  type NavOptions,
+} from "../shared/index";
+import { Menu, MenuContent, MenuLinkItem, MenuTrigger } from "./menu";
 import {
   Navbar,
   NavbarLink,
@@ -16,7 +21,7 @@ import {
   NavbarMenuContent,
   NavbarMenuLink,
   NavbarMenuTrigger,
-} from "./navbar"
+} from "./navbar";
 
 export interface HomeLayoutProps extends BaseLayoutProps {
   nav?: Partial<
@@ -24,9 +29,9 @@ export interface HomeLayoutProps extends BaseLayoutProps {
       /**
        * Open mobile menu when hovering the trigger
        */
-      enableHoverToOpen?: boolean
+      enableHoverToOpen?: boolean;
     }
-  >
+  >;
 }
 
 export function HomeLayout(props: HomeLayoutProps & HTMLAttributes<HTMLElement>) {
@@ -39,9 +44,9 @@ export function HomeLayout(props: HomeLayoutProps & HTMLAttributes<HTMLElement>)
     themeSwitch = { enabled: !disableThemeSwitch },
     searchToggle,
     ...rest
-  } = props
+  } = props;
 
-  const id = useId()
+  const id = useId();
 
   return (
     <NavProvider transparentMode={nav?.transparentMode}>
@@ -60,7 +65,7 @@ export function HomeLayout(props: HomeLayoutProps & HTMLAttributes<HTMLElement>)
         {props.children}
       </main>
     </NavProvider>
-  )
+  );
 }
 
 export function Header({
@@ -71,10 +76,10 @@ export function Header({
   themeSwitch = {},
   searchToggle = {},
 }: HomeLayoutProps) {
-  const finalLinks = useMemo(() => getLinks(links, githubUrl), [links, githubUrl])
+  const finalLinks = useMemo(() => getLinks(links, githubUrl), [links, githubUrl]);
 
-  const navItems = finalLinks.filter((item) => ["nav", "all"].includes(item.on ?? "all"))
-  const menuItems = finalLinks.filter((item) => ["menu", "all"].includes(item.on ?? "all"))
+  const navItems = finalLinks.filter((item) => ["nav", "all"].includes(item.on ?? "all"));
+  const menuItems = finalLinks.filter((item) => ["menu", "all"].includes(item.on ?? "all"));
 
   return (
     <Navbar>
@@ -134,7 +139,7 @@ export function Header({
                 size: "icon",
                 color: "ghost",
                 className: "group",
-              })
+              }),
             )}
             enableHover={nav.enableHoverToOpen}
           >
@@ -179,23 +184,23 @@ export function Header({
         </Menu>
       </ul>
     </Navbar>
-  )
+  );
 }
 
 function NavbarLinkItem({ item, ...props }: { item: LinkItemType; className?: string }) {
-  if (item.type === "custom") return <div {...props}>{item.children}</div>
+  if (item.type === "custom") return <div {...props}>{item.children}</div>;
 
   if (item.type === "menu") {
     const children = item.items.map((child) => {
       if (child.type === "custom")
-        return <Fragment key={`${child.type}`}>{child.children}</Fragment>
+        return <Fragment key={`${child.type}`}>{child.children}</Fragment>;
 
       const {
         banner = child.icon ? (
           <div className="w-fit rounded-md border bg-fd-muted p-1 [&_svg]:size-4">{child.icon}</div>
         ) : null,
         ...rest
-      } = child.menu ?? {}
+      } = child.menu ?? {};
 
       return (
         <NavbarMenuLink
@@ -215,8 +220,8 @@ function NavbarLinkItem({ item, ...props }: { item: LinkItemType; className?: st
             </>
           )}
         </NavbarMenuLink>
-      )
-    })
+      );
+    });
 
     return (
       <NavbarMenu>
@@ -231,7 +236,7 @@ function NavbarLinkItem({ item, ...props }: { item: LinkItemType; className?: st
         </NavbarMenuTrigger>
         <NavbarMenuContent>{children}</NavbarMenuContent>
       </NavbarMenu>
-    )
+    );
   }
 
   return (
@@ -243,11 +248,11 @@ function NavbarLinkItem({ item, ...props }: { item: LinkItemType; className?: st
     >
       {item.type === "icon" ? item.icon : item.text}
     </NavbarLink>
-  )
+  );
 }
 
 function isSecondary(item: LinkItemType): boolean {
-  if ("secondary" in item && item.secondary != null) return item.secondary
+  if ("secondary" in item && item.secondary != null) return item.secondary;
 
-  return item.type === "icon"
+  return item.type === "icon";
 }

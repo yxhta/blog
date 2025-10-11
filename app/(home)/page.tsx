@@ -1,11 +1,11 @@
-import { ArrowRight, Calendar } from "lucide-react"
-import Link from "next/link"
-import { blogSource } from "@/lib/blog-source"
+import { ArrowRight, Calendar } from "lucide-react";
+import Link from "next/link";
+import { blogSource } from "@/lib/blog-source";
 
 export default async function HomePage() {
   const recentPosts = (await blogSource.getPages())
     .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-    .slice(0, 3)
+    .slice(0, 3);
 
   return (
     <main className="flex flex-1 flex-col">
@@ -53,5 +53,5 @@ export default async function HomePage() {
         </section>
       )}
     </main>
-  )
+  );
 }

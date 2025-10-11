@@ -1,9 +1,10 @@
+import { DocsBody, DocsPage } from "fumadocs-ui/page";
 import { Tag } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { blogSource } from "@/lib/blog-source";
-import { DocsBody, DocsPage } from "fumadocs-ui/page";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "All Tags - blog.yxhta.com",
   description: "",
 };
@@ -22,9 +23,7 @@ export default async function TagsPage() {
   }
 
   // Sort tags by count (most used first)
-  const sortedTags = Array.from(tagCounts.entries()).sort(
-    (a, b) => b[1] - a[1],
-  );
+  const sortedTags = Array.from(tagCounts.entries()).sort((a, b) => b[1] - a[1]);
 
   return (
     <DocsPage>

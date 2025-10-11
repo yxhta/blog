@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { Link as LinkIcon, Share2 } from "lucide-react"
-import { useState } from "react"
+import { Link as LinkIcon, Share2 } from "lucide-react";
+import { useState } from "react";
 
 interface SocialShareProps {
-  url: string
-  title: string
-  description?: string
+  url: string;
+  title: string;
+  description?: string;
 }
 
 export function SocialShare({ url, title, description }: SocialShareProps) {
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState(false);
 
-  const fullUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}${url}`
+  const fullUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}${url}`;
   // const encodedTitle = encodeURIComponent(title)
   // const encodedDescription = encodeURIComponent(description || "")
   // const encodedUrl = encodeURIComponent(fullUrl)
@@ -23,13 +23,13 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(fullUrl)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      await navigator.clipboard.writeText(fullUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy URL:", err)
+      console.error("Failed to copy URL:", err);
     }
-  }
+  };
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -38,13 +38,13 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
           title,
           text: description,
           url: fullUrl,
-        })
+        });
       } catch (err) {
         // User cancelled sharing or sharing failed
-        console.error("Failed to share:", err)
+        console.error("Failed to share:", err);
       }
     }
-  }
+  };
 
   return (
     <div className="flex items-center gap-2">
@@ -88,5 +88,5 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
         )}
       </button>
     </div>
-  )
+  );
 }

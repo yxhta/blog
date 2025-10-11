@@ -1,63 +1,63 @@
-import type { I18nConfig } from "fumadocs-core/i18n"
-import type { NavProviderProps } from "fumadocs-ui/contexts/layout"
-import type { HTMLAttributes, ReactNode } from "react"
+import type { I18nConfig } from "fumadocs-core/i18n";
+import type { NavProviderProps } from "fumadocs-ui/contexts/layout";
+import type { HTMLAttributes, ReactNode } from "react";
 
 export interface NavOptions extends NavProviderProps {
-  enabled: boolean
-  component: ReactNode
+  enabled: boolean;
+  component: ReactNode;
 
-  title?: ReactNode
+  title?: ReactNode;
 
   /**
    * Redirect url of title
    * @defaultValue '/'
    */
-  url?: string
+  url?: string;
 
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export interface BaseLayoutProps {
   themeSwitch?: {
-    enabled?: boolean
-    component?: ReactNode
-    mode?: "light-dark" | "light-dark-system"
-  }
+    enabled?: boolean;
+    component?: ReactNode;
+    mode?: "light-dark" | "light-dark-system";
+  };
 
   searchToggle?: Partial<{
-    enabled: boolean
+    enabled: boolean;
     components: Partial<{
-      sm: ReactNode
-      lg: ReactNode
-    }>
-  }>
+      sm: ReactNode;
+      lg: ReactNode;
+    }>;
+  }>;
 
   /**
    * Remove theme switcher component
    *
    * @deprecated Use `themeSwitch.enabled` instead.
    */
-  disableThemeSwitch?: boolean
+  disableThemeSwitch?: boolean;
 
   /**
    * I18n options
    *
    * @defaultValue false
    */
-  i18n?: boolean | I18nConfig
+  i18n?: boolean | I18nConfig;
 
   /**
    * GitHub url
    */
-  githubUrl?: string
+  githubUrl?: string;
 
-  links?: LinkItemType[]
+  links?: LinkItemType[];
   /**
    * Replace or disable navbar
    */
-  nav?: Partial<NavOptions>
+  nav?: Partial<NavOptions>;
 
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 interface BaseItem {
@@ -66,55 +66,55 @@ interface BaseItem {
    *
    * @defaultValue 'all'
    */
-  on?: "menu" | "nav" | "all"
+  on?: "menu" | "nav" | "all";
 }
 
 export interface BaseLinkType extends BaseItem {
-  url: string
+  url: string;
   /**
    * When the item is marked as active
    *
    * @defaultValue 'url'
    */
-  active?: "url" | "nested-url" | "none"
-  external?: boolean
+  active?: "url" | "nested-url" | "none";
+  external?: boolean;
 }
 
 export interface MainItemType extends BaseLinkType {
-  type?: "main"
-  icon?: ReactNode
-  text: ReactNode
-  description?: ReactNode
+  type?: "main";
+  icon?: ReactNode;
+  text: ReactNode;
+  description?: ReactNode;
 }
 
 export interface IconItemType extends BaseLinkType {
-  type: "icon"
+  type: "icon";
   /**
    * `aria-label` of icon button
    */
-  label?: string
-  icon: ReactNode
-  text: ReactNode
+  label?: string;
+  icon: ReactNode;
+  text: ReactNode;
   /**
    * @defaultValue true
    */
-  secondary?: boolean
+  secondary?: boolean;
 }
 
 export interface ButtonItemType extends BaseLinkType {
-  type: "button"
-  icon?: ReactNode
-  text: ReactNode
+  type: "button";
+  icon?: ReactNode;
+  text: ReactNode;
   /**
    * @defaultValue false
    */
-  secondary?: boolean
+  secondary?: boolean;
 }
 
 export interface MenuItemType extends Partial<BaseLinkType> {
-  type: "menu"
-  icon?: ReactNode
-  text: ReactNode
+  type: "menu";
+  icon?: ReactNode;
+  text: ReactNode;
 
   items: (
     | (MainItemType & {
@@ -122,25 +122,25 @@ export interface MenuItemType extends Partial<BaseLinkType> {
          * Options when displayed on navigation menu
          */
         menu?: HTMLAttributes<HTMLElement> & {
-          banner?: ReactNode
-        }
+          banner?: ReactNode;
+        };
       })
     | CustomItemType
-  )[]
+  )[];
 
   /**
    * @defaultValue false
    */
-  secondary?: boolean
+  secondary?: boolean;
 }
 
 export interface CustomItemType extends BaseItem {
-  type: "custom"
+  type: "custom";
   /**
    * @defaultValue false
    */
-  secondary?: boolean
-  children: ReactNode
+  secondary?: boolean;
+  children: ReactNode;
 }
 
 export type LinkItemType =
@@ -148,13 +148,13 @@ export type LinkItemType =
   | IconItemType
   | ButtonItemType
   | MenuItemType
-  | CustomItemType
+  | CustomItemType;
 
 /**
  * Get Links Items with shortcuts
  */
 export function getLinks(links: LinkItemType[] = [], githubUrl?: string): LinkItemType[] {
-  let result = links ?? []
+  let result = links ?? [];
 
   if (githubUrl)
     result = [
@@ -172,9 +172,9 @@ export function getLinks(links: LinkItemType[] = [], githubUrl?: string): LinkIt
         ),
         external: true,
       },
-    ]
+    ];
 
-  return result
+  return result;
 }
 
-export { BaseLinkItem } from "./client"
+export { BaseLinkItem } from "./client";
