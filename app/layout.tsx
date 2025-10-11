@@ -1,12 +1,12 @@
-import "./global.css"
-import { RootProvider } from "fumadocs-ui/provider"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import type { ReactNode } from "react"
+import "./global.css";
+import { RootProvider } from "fumadocs-ui/provider";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import type { ReactNode } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
-})
+});
 
 export const metadata: Metadata = {
   title: {
@@ -15,11 +15,19 @@ export const metadata: Metadata = {
   },
   description:
     "A technical blog focused on software engineering, programming tutorials, and best practices.",
-  keywords: ["software engineering", "programming", "web development", "tutorials", "tech blog"],
+  keywords: [
+    "software engineering",
+    "programming",
+    "web development",
+    "tutorials",
+    "tech blog",
+  ],
   authors: [{ name: "yxhta" }],
   creator: "yxhta",
   publisher: "yxhta",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+  ),
   alternates: {
     canonical: "/",
     types: {
@@ -50,7 +58,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-}
+};
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -63,9 +71,9 @@ export default function Layout({ children }: { children: ReactNode }) {
           href="/rss.xml"
         />
       </head>
-      <body className="flex flex-col min-h-screen">
+      <body>
         <RootProvider>{children}</RootProvider>
       </body>
     </html>
-  )
+  );
 }
