@@ -24,6 +24,7 @@ export const blog = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
+    providerImportSource: "@/mdx-components",
     // rehypeCodeOptions: {
     //   themes: {
     //     light: "github-light",

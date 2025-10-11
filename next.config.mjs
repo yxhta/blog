@@ -1,6 +1,10 @@
 import { createMDX } from "fumadocs-mdx/next"
 
-const withMDX = createMDX()
+const withMDX = createMDX({
+  mdxOptions: {
+    providerImportSource: "@/mdx-components",
+  },
+})
 
 /** @type {import('next').NextConfig} */
 const config = {
