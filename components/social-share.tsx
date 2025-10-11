@@ -1,7 +1,7 @@
 "use client";
 
 import { Link as LinkIcon, Share2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SocialShareProps {
   url: string;
@@ -11,6 +11,11 @@ interface SocialShareProps {
 
 export function SocialShare({ url, title, description }: SocialShareProps) {
   const [copied, setCopied] = useState(false);
+  const [isShareSupported, setIsShareSupported] = useState(false);
+
+  useEffect(() => {
+    setIsShareSupported(typeof navigator !== "undefined" && "share" in navigator);
+  }, []);
 
   const fullUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}${url}`;
   // const encodedTitle = encodeURIComponent(title)
@@ -32,7 +37,7 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
   };
 
   const handleShare = async () => {
-    if (navigator.share) {
+    if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
           title,
@@ -51,7 +56,7 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
       <span className="text-sm text-muted-foreground">Share:</span>
 
       {/* Native Web Share API (mobile) */}
-      {typeof navigator !== "undefined" && "share" in navigator && (
+      {isShareSupported && (
         <button
           type="button"
           onClick={handleShare}
