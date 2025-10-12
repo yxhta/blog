@@ -1,5 +1,5 @@
 import { defineConfig, defineDocs, frontmatterSchema, metaSchema } from "fumadocs-mdx/config";
-import { z } from "zod";
+import * as z from "zod";
 
 const blogFrontmatterSchema = frontmatterSchema.extend({
   date: z
