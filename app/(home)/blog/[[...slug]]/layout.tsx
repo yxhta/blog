@@ -16,9 +16,11 @@ export default function BlogLayout({ children }: { children: ReactNode }) {
       sidebar={{
         enabled: false,
       }}
-      containerProps={{
-        className: "container max-w-6xl mx-auto py-12 px-4",
-      }}
+      containerProps={
+        {
+          // className: "container max-w-6xl mx-auto py-12",
+        }
+      }
     >
       {children}
     </DocsLayout>
