@@ -45,7 +45,12 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
           url: fullUrl,
         });
       } catch (err) {
-        // User cancelled sharing or sharing failed
+        if (err instanceof DOMException && err.name === "AbortError") {
+          return;
+        }
+        if ((err as { name?: string }).name === "AbortError") {
+          return;
+        }
         console.error("Failed to share:", err);
       }
     }
