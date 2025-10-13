@@ -1,5 +1,5 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
-import { BookIcon, HomeIcon, TagIcon } from "lucide-react";
+import { BookIcon, HomeIcon, TagIcon, UserIcon } from "lucide-react";
 
 /**
  * Shared layout configurations
@@ -24,6 +24,11 @@ export const baseOptions: BaseLayoutProps = {
       icon: <HomeIcon />,
       text: "Home",
       url: "/",
+    },
+    {
+      icon: <UserIcon />,
+      text: "About",
+      url: "/about",
     },
     {
       icon: <BookIcon />,
