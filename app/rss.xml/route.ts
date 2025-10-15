@@ -1,4 +1,4 @@
-import { blogSource } from "@/lib/blog-source";
+import { blogSource } from "@/entities/post";
 
 export async function GET() {
   const posts = await blogSource.getPages();

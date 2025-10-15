@@ -15,12 +15,19 @@ yarn dev
 
 Open http://localhost:3000 with your browser to see the result.
 
-## Learn More
+## Architecture
 
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
+This codebase adopts [Feature-Sliced Design](https://feature-sliced.github.io/documentation/)
+to keep UI and domain layers modular:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.vercel.app) - learn about Fumadocs
+- `app/` – Next.js App Router entrypoints and route handlers.
+- `src/shared/` – reusable primitives (`lib`, `layout`, `ui`) that have no domain coupling.
+- `src/entities/` – domain models and UI tied to core data (e.g. blog posts).
+- `src/features/` – user-facing interactions composed from entities and shared pieces.
+- `src/widgets/` – page-level, reusable compositions wiring multiple features together.
+- `content/` – MDX content sourced by Fumadocs.
+
+The root `tsconfig.json` exposes an alias so imports use `@/...` for `src/**` modules
+and `@app/...` (or relative paths) for files that stay in `app/`. When adding new
+code, prefer placing it in the appropriate `src/{shared,entities,features,widgets}`
+slice and re-export via a local `index.ts`.

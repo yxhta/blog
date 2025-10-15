@@ -2,17 +2,17 @@ import Link from "fumadocs-core/link";
 import { NavProvider } from "fumadocs-ui/contexts/layout";
 import { ChevronDown, Languages } from "lucide-react";
 import { Fragment, type HTMLAttributes, useId, useMemo } from "react";
-import { cn } from "../../../lib/cn";
-import { LanguageToggle, LanguageToggleText } from "../../language-toggle";
-import { LargeSearchToggle, SearchToggle } from "../../search-toggle";
-import { ThemeToggle } from "../../theme-toggle";
-import { buttonVariants } from "../../ui/button";
+import { LanguageToggle, LanguageToggleText } from "@/features/language-switcher";
+import { LargeSearchToggle, SearchToggle } from "@/features/search-toggle";
+import { ThemeToggle } from "@/features/theme-switcher";
 import {
   type BaseLayoutProps,
   getLinks,
   type LinkItemType,
   type NavOptions,
-} from "../shared/index";
+} from "@/shared/layout";
+import { cn } from "@/shared/lib/cn";
+import { buttonVariants } from "@/shared/ui/button";
 import { Menu, MenuContent, MenuLinkItem, MenuTrigger } from "./menu";
 import {
   Navbar,

@@ -2,7 +2,7 @@ import { ArrowRight, Calendar, Clock, Tag } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { blogSource } from "@/lib/blog-source";
+import { blogSource } from "@/entities/post";
 
 interface TagPageProps {
   params: Promise<{ tag: string }>;

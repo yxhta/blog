@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { BlogPostCard } from "@/components/blog-post-card";
-import { blogSource } from "@/lib/blog-source";
+import { BlogPostCard, blogSource } from "@/entities/post";
 
 export const metadata: Metadata = {
   title: "Blog - Software Engineering Insights",

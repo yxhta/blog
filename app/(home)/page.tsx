@@ -1,7 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { BlogPostCard } from "@/components/blog-post-card";
-import { blogSource } from "@/lib/blog-source";
+import { BlogPostCard, blogSource } from "@/entities/post";
 
 export default async function HomePage() {
   const recentPosts = blogSource

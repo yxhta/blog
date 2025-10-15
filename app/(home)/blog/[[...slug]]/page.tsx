@@ -3,8 +3,8 @@ import { Calendar, Clock, Tag } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { SocialShare } from "@/components/social-share";
-import { blogSource } from "@/lib/blog-source";
+import { blogSource } from "@/entities/post";
+import { SocialShare } from "@/features/social-share";
 
 interface BlogPageProps {
   params: Promise<{ slug?: string[] }>;

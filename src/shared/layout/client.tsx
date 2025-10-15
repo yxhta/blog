@@ -2,7 +2,7 @@
 import { usePathname } from "fumadocs-core/framework";
 import Link from "fumadocs-core/link";
 import type { ComponentProps } from "react";
-import { isActive } from "../../../lib/is-active";
+import { isActive } from "@/shared/lib/is-active";
 import type { BaseLinkType } from "./index";
 
 export function BaseLinkItem({

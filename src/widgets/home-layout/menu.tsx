@@ -2,15 +2,15 @@
 import { cva } from "class-variance-authority";
 import Link from "fumadocs-core/link";
 import type { ComponentPropsWithoutRef } from "react";
-import { cn } from "../../../lib/cn";
+import { BaseLinkItem, type LinkItemType } from "@/shared/layout";
+import { cn } from "@/shared/lib/cn";
+import { buttonVariants } from "@/shared/ui/button";
 import {
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuTrigger,
-} from "../../navigation-menu";
-import { buttonVariants } from "../../ui/button";
-import { BaseLinkItem, type LinkItemType } from "../shared/index";
+} from "@/shared/ui/navigation-menu";
 
 const menuItemVariants = cva("", {
   variants: {

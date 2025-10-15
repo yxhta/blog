@@ -7,7 +7,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 import Link, { type LinkProps } from "fumadocs-core/link";
 import { useNav } from "fumadocs-ui/contexts/layout";
 import { type ComponentProps, useId, useState } from "react";
-import { cn } from "../../../lib/cn";
+import { BaseLinkItem } from "@/shared/layout";
+import { cn } from "@/shared/lib/cn";
+import { buttonVariants } from "@/shared/ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,9 +18,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
-} from "../../navigation-menu";
-import { buttonVariants } from "../../ui/button";
-import { BaseLinkItem } from "../shared/index";
+} from "@/shared/ui/navigation-menu";
 
 const navItemVariants = cva(
   "inline-flex items-center gap-1 p-2 text-fd-muted-foreground transition-colors hover:text-fd-accent-foreground data-[active=true]:text-fd-primary [&_svg]:size-4",

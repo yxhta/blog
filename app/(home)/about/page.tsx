@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SocialLinks } from "@/components/social-links";
+import { SocialLinks } from "@/widgets/social-links";
 
 export const metadata: Metadata = {
   title: "About - yxhta について",
