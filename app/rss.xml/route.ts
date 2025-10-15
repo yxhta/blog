@@ -1,9 +1,10 @@
 import { blogSource } from "@/entities/post";
+import { getBaseUrl } from "@/shared/lib/base-url";
 
 export async function GET() {
   const posts = await blogSource.getPages();
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const baseUrl = getBaseUrl();
 
   const rssXml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">

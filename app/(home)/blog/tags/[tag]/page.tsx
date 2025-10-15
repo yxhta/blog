@@ -124,7 +124,8 @@ export async function generateStaticParams() {
   }
 
   return Array.from(allTags).map((tag) => ({
-    tag: encodeURIComponent(tag),
+    // return the raw tag; Next.js handles encoding when generating paths
+    tag,
   }));
 }
 

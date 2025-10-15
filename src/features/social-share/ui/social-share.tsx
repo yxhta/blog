@@ -1,7 +1,8 @@
 "use client";
 
 import { Link as LinkIcon, Share2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { getBaseUrl } from "@/shared/lib/base-url";
 
 interface SocialShareProps {
   url: string;
@@ -17,7 +18,7 @@ export function SocialShare({ url, title, description }: SocialShareProps) {
     setIsShareSupported(typeof navigator !== "undefined" && "share" in navigator);
   }, []);
 
-  const fullUrl = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}${url}`;
+  const fullUrl = useMemo(() => `${getBaseUrl()}${url}`, [url]);
   // const encodedTitle = encodeURIComponent(title)
   // const encodedDescription = encodeURIComponent(description || "")
   // const encodedUrl = encodeURIComponent(fullUrl)
