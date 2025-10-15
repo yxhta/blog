@@ -22,7 +22,9 @@ export default async function BlogPostPage(props: BlogPageProps) {
   if (!page) notFound();
 
   const MDX = page.data.body;
-  const readingTime = Math.ceil(page.data.content.split(/\s+/).length / 200);
+  const rawContent = await page.data.getText("raw");
+  const wordCount = rawContent.split(/\s+/).filter(Boolean).length;
+  const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
   return (
     <DocsPage lastUpdate={page.data.lastModified}>

@@ -24,6 +24,16 @@ export default async function TagPage(props: TagPageProps) {
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
   );
 
+  const postsWithReadingTime = await Promise.all(
+    sortedPosts.map(async (post) => {
+      const rawContent = await post.data.getText("raw");
+      const wordCount = rawContent.split(/\s+/).filter(Boolean).length;
+      const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+      return { post, readingTime };
+    }),
+  );
+
   return (
     <div className="container max-w-6xl mx-auto py-12">
       <div className="mb-12">
@@ -38,9 +48,7 @@ export default async function TagPage(props: TagPageProps) {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {sortedPosts.map((post) => {
-          const readingTime = Math.ceil(post.data.content.split(/\s+/).length / 200);
-
+        {postsWithReadingTime.map(({ post, readingTime }) => {
           return (
             <article key={post.url} className="group">
               <Link href={post.url}>
