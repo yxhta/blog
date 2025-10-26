@@ -55,7 +55,12 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={inter.className}
+      suppressHydrationWarning
+      data-scroll-behavior="smooth"
+    >
       <head>
         <link
           rel="alternate"
