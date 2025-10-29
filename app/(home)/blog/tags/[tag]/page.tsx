@@ -2,36 +2,37 @@ import { ArrowRight, Calendar, Clock, Tag } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { blogSource } from "@/entities/post";
+import { blogSource, getPostReadingTime } from "@/entities/post";
 
 interface TagPageProps {
   params: Promise<{ tag: string }>;
 }
 
+type TagPostWithReadingTime = {
+  post: ReturnType<typeof blogSource.getPages>[number];
+  readingTime: number;
+};
+
 export default async function TagPage(props: TagPageProps) {
   const params = await props.params;
-  const { tag } = params;
-  const decodedTag = decodeURIComponent(tag);
+  const decodedTag = decodeURIComponent(params.tag);
 
-  const allPosts = await blogSource.getPages();
-  const postsWithTag = allPosts.filter((post) => post.data.tags?.includes(decodedTag));
+  const postsWithTag = blogSource
+    .getPages()
+    .filter((post) => post.data.tags?.includes(decodedTag));
 
   if (postsWithTag.length === 0) {
     notFound();
   }
 
-  const sortedPosts = postsWithTag.sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-  );
-
-  const postsWithReadingTime = await Promise.all(
-    sortedPosts.map(async (post) => {
-      const rawContent = await post.data.getText("raw");
-      const wordCount = rawContent.split(/\s+/).filter(Boolean).length;
-      const readingTime = Math.max(1, Math.ceil(wordCount / 200));
-
-      return { post, readingTime };
-    }),
+  const postsWithReadingTime: TagPostWithReadingTime[] = await Promise.all(
+    postsWithTag
+      .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+      .map(async (post) => {
+        const slug = post.url.split("/").filter(Boolean).slice(1);
+        const readingTime = (await getPostReadingTime(slug)) ?? 1;
+        return { post, readingTime };
+      }),
   );
 
   return (
@@ -42,8 +43,8 @@ export default async function TagPage(props: TagPageProps) {
           <h1 className="text-4xl font-bold">#{decodedTag}</h1>
         </div>
         <p className="text-muted-foreground text-lg">
-          {postsWithTag.length} {postsWithTag.length === 1 ? "post" : "posts"} tagged with "
-          {decodedTag}"
+          {postsWithReadingTime.length}{" "}
+          {postsWithReadingTime.length === 1 ? "post" : "posts"} tagged with "{decodedTag}"
         </p>
       </div>
 
@@ -131,8 +132,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: TagPageProps): Promise<Metadata> {
   const params = await props.params;
-  const { tag } = params;
-  const decodedTag = decodeURIComponent(tag);
+  const decodedTag = decodeURIComponent(params.tag);
+  const postsWithTag = blogSource
+    .getPages()
+    .filter((post) => post.data.tags?.includes(decodedTag));
+
+  if (postsWithTag.length === 0) {
+    notFound();
+  }
 
   return {
     title: `Posts tagged with "${decodedTag}" - blog.yxhta.com`,

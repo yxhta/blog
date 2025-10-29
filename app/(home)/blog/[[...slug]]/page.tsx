@@ -3,7 +3,7 @@ import { Calendar, Clock, Tag } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { blogSource } from "@/entities/post";
+import { blogSource, getPostReadingTime } from "@/entities/post";
 import { SocialShare } from "@/features/social-share";
 
 interface BlogPageProps {
@@ -19,12 +19,16 @@ export default async function BlogPostPage(props: BlogPageProps) {
   }
 
   const page = blogSource.getPage(params.slug);
-  if (!page) notFound();
+  if (!page) {
+    notFound();
+  }
+
+  const readingTime = await getPostReadingTime(params.slug);
+  if (readingTime === null) {
+    notFound();
+  }
 
   const MDX = page.data.body;
-  const rawContent = await page.data.getText("raw");
-  const wordCount = rawContent.split(/\s+/).filter(Boolean).length;
-  const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
   return (
     <DocsPage lastUpdate={page.data.lastModified}>
@@ -96,7 +100,6 @@ export async function generateMetadata(props: BlogPageProps): Promise<Metadata> 
   }
 
   const page = blogSource.getPage(params.slug);
-
   if (!page) notFound();
 
   return {
